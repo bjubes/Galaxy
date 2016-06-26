@@ -1,21 +1,16 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class DrawOrbits : MonoBehaviour
 {
 
-    //debug
-    public GameObject sunGO, planetGO;
-
-    public Star sun;
-    public Planet planet;
-
-    public float ThetaScale = 0.01f;
+    public float thetaScale = 0.01f;
     float radius;
     private int Size;
-    private LineRenderer LineDrawer;
-    private float Theta = 0f;
-    float sunX, sunY;
+    private float theta = 0f;
+
+    List<LineRenderer> orbits = new List<LineRenderer>();
 
     void Start()
     {
@@ -31,22 +26,35 @@ public class DrawOrbits : MonoBehaviour
                 lr.receiveShadows = false;
                 //Draw orbit
                 DrawOrbit(lr, sun, p);
+                orbits.Add(lr);
             }
         }   
     }
 
     void DrawOrbit(LineRenderer render,Star sun, Planet planet)
     {
-        radius = Vector2.Distance(new Vector2(planet.x, planet.y), new Vector2(sun.x, sun.y));
-        Theta = 0f;
-        Size = (int)((1f / ThetaScale) + 1f);
+        radius = planet.distFromSun;
+        theta = 0f;
+        Size = (int)((1f / thetaScale) + 1f);
         render.SetVertexCount(Size);
         for (int i = 0; i < Size; i++)
         {
-            Theta += (2.0f * Mathf.PI * ThetaScale);
-            float x = radius * Mathf.Cos(Theta) + sun.x;
-            float y = radius * Mathf.Sin(Theta) + sun.y;
+            theta += (2.0f * Mathf.PI * thetaScale);
+            float x = radius * Mathf.Cos(theta) + sun.x;
+            float y = radius * Mathf.Sin(theta) + sun.y;
+
+
             render.SetPosition(i, new Vector3(x, y, 0));
         }
     }
+
+    void Update()
+    {
+        foreach (LineRenderer lr in orbits) {
+            float width = Mathf.Min( Camera.main.orthographicSize / Settings.OrbitLineSize, Settings.maxOrbitSize);
+            lr.SetWidth(width, width);
+        }
+
+    }
+
 }

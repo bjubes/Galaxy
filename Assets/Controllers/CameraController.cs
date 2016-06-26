@@ -26,7 +26,12 @@ public class CameraController : MonoBehaviour
         }
         //scroll to zoom
         Camera.main.orthographicSize -= Camera.main.orthographicSize * Input.GetAxis("Mouse ScrollWheel");
-        Camera.main.orthographicSize = Mathf.Clamp(Camera.main.orthographicSize, 2f, 50f);
+        Camera.main.orthographicSize = Mathf.Clamp(Camera.main.orthographicSize, 2f, 500f);
+    }
+
+    void SnapToCoords(float x, float y)
+    {
+        transform.position = new Vector3(x,y,transform.position.z);
     }
 }
 
