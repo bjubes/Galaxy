@@ -4,6 +4,16 @@ using System.Collections;
 public class CameraController : MonoBehaviour
 {
     Vector3 currFramePosition, lastFramePosition;
+    public static CameraController Instance { get; protected set; }
+
+    void Start()
+    {
+        if (Instance != null)
+        {
+            Debug.LogError("Two Camera Controllers are present in the Scene!");
+        }
+        Instance = this;
+    }
 
     void Update()
     {
@@ -29,7 +39,7 @@ public class CameraController : MonoBehaviour
         Camera.main.orthographicSize = Mathf.Clamp(Camera.main.orthographicSize, 2f, 500f);
     }
 
-    void SnapToCoords(float x, float y)
+    public void SnapToCoords(float x, float y)
     {
         transform.position = new Vector3(x,y,transform.position.z);
     }
