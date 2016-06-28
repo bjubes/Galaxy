@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class GameController : MonoBehaviour
 {
     public Transform planetPanel;
-    public Dictionary<Planet, Button> PlanetButtons = new Dictionary<Planet, Button>();
+    public Dictionary<Planet, GameObject> PlanetButtons = new Dictionary<Planet, GameObject>();
     public GameObject planetButtonPrefab;
 
     Nation myNation;
@@ -16,10 +16,12 @@ public class GameController : MonoBehaviour
 	    myNation = new Nation("_name_", "description here", 0, 10000);
         myNation.RegisterOnPlanetColonized((Planet p) => { RefreshPlanetUI(); });
         myNation.ColonizePlanet(Galaxy.Instance.GetRandomPlanet());
-	}
-	
-	// Update is called once per frame
-	void Update () {
+        myNation.ColonizePlanet(Galaxy.Instance.GetRandomPlanet());
+
+    }
+
+    // Update is called once per frame
+    void Update () {
 	
 	}
 
@@ -30,10 +32,11 @@ public class GameController : MonoBehaviour
         {
             if (!PlanetButtons.Keys.Contains(p))
             {
-                var closureFixPlanet = p; //TODO: check if this actually fixes closure problem.
+                var closureFixPlanet = p;
                 GameObject btn = (GameObject)Instantiate(planetButtonPrefab);
+                PlanetButtons.Add(p,btn);
                 btn.transform.SetParent(planetPanel);
-                Button.ButtonClickedEvent btnEvent =  btn.GetComponent<Button>().onClick = new Button.ButtonClickedEvent();
+                var btnEvent =  btn.GetComponent<Button>().onClick = new Button.ButtonClickedEvent();
                 btnEvent.AddListener( () => { CameraController.Instance.SnapToObject(closureFixPlanet); } );
             }
         }
