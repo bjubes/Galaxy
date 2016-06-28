@@ -28,12 +28,9 @@ public class Nation
         if (p == null)
         {
             Debug.LogError("Planet cannot be null");
+            return;
         }
-        if (planets == null)
-        {
-            Debug.Log("wFocusType");
-        }
-
+        p.owner = this;
         planets.Add(p);
         if (onPlanetColonzied != null)
         {

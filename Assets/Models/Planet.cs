@@ -2,7 +2,7 @@
 using System;
 using System.Collections;
 
-public class Planet
+public class Planet : ILocatable
 {
 
     public string name;
@@ -58,5 +58,10 @@ public class Planet
         {
             onPlanetChanged(this);
         }
+    }
+
+    public Vector2 CurrentLocation()
+    {
+        return new Vector2(x, y);
     }
 }

@@ -5,6 +5,8 @@ public class CameraController : MonoBehaviour
 {
     Vector3 currFramePosition, lastFramePosition;
     public static CameraController Instance { get; protected set; }
+    bool snapToObject = false;
+    ILocatable snapObject;
 
     void Start()
     {
@@ -20,12 +22,27 @@ public class CameraController : MonoBehaviour
         currFramePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         currFramePosition.z = 0;
 
+        DoSnapToObject();
         UpdateCameraMovement();
 
         lastFramePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         lastFramePosition.z = 0;
+
+
     }
 
+    void DoSnapToObject()
+    {
+        if (Input.GetMouseButton(1) || Input.GetMouseButton(2))//right or middle mosue
+        {
+            snapToObject = false;
+        }
+
+        if (snapToObject)
+        {
+            SnapToCoords(snapObject.CurrentLocation().x, snapObject.CurrentLocation().y);
+        }
+    }
     void UpdateCameraMovement()
     {
         // Handle screen panning
@@ -41,7 +58,17 @@ public class CameraController : MonoBehaviour
 
     public void SnapToCoords(float x, float y)
     {
-        transform.position = new Vector3(x,y,transform.position.z);
+        transform.position = new Vector3(x, y, transform.position.z);
     }
+
+    public void SnapToObject(ILocatable obj) //toggles on snapping to given object by assigning vars. acutal snapping is done in update method
+    {
+        snapToObject = true;
+        snapObject = obj;
+    }
+
+
+
+
 }
 

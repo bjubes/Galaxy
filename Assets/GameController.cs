@@ -30,10 +30,11 @@ public class GameController : MonoBehaviour
         {
             if (!PlanetButtons.Keys.Contains(p))
             {
+                var closureFixPlanet = p; //TODO: check if this actually fixes closure problem.
                 GameObject btn = (GameObject)Instantiate(planetButtonPrefab);
                 btn.transform.SetParent(planetPanel);
                 Button.ButtonClickedEvent btnEvent =  btn.GetComponent<Button>().onClick = new Button.ButtonClickedEvent();
-                btnEvent.AddListener( () => { CameraController.Instance.SnapToCoords(p.x, p.y); } );
+                btnEvent.AddListener( () => { CameraController.Instance.SnapToObject(closureFixPlanet); } );
             }
         }
     }

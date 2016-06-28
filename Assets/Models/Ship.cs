@@ -4,7 +4,7 @@ using System;
 using System.Security.Cryptography.X509Certificates;
 using UnityEngine.EventSystems;
 
-public class Ship
+public class Ship : ILocatable
 {
 
     public float x, y;
@@ -70,5 +70,10 @@ public class Ship
     public void UnregisterOnPlanetChanged(Action<Ship> callback)
     {
         onShipChanged -= callback;
+    }
+
+    public Vector2 CurrentLocation()
+    {
+        return new Vector2(x,y);
     }
 }
