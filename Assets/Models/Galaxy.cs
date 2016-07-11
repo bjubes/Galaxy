@@ -15,6 +15,8 @@ public class Galaxy
     public Dictionary<int, SolarSystem> solarSystems { get; protected set; }
     public Dictionary<int, Ship> ships { get; protected set; }
 
+	public List<Nation> nations;
+
     public int width;
     public int height;
 
@@ -32,6 +34,7 @@ public class Galaxy
         stars = new Dictionary<int, Star>();
         solarSystems = new Dictionary<int, SolarSystem>();
         ships = new Dictionary<int, Ship>();
+		nations = new List<Nation> ();
 
 
         for (int i = 0; i < numSolarSystem; i++)

@@ -15,7 +15,6 @@ public class GalaxyController : MonoBehaviour
         }
         galaxy = new Galaxy(solarSystems,width,height,seed);
 
-        galaxy.CreateShip(0, 0, false, null, 10, 1);
     }
 
     void Update()

@@ -7,6 +7,9 @@ using UnityEngine.EventSystems;
 public class Ship : ILocatable
 {
 
+	public string name;
+	public Nation owner;
+
     public float x, y;
     public int id { get; protected set; }
     public bool docked;

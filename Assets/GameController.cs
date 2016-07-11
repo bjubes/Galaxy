@@ -18,6 +18,8 @@ public class GameController : MonoBehaviour
         myNation.ColonizePlanet(Galaxy.Instance.GetRandomPlanet());
         myNation.ColonizePlanet(Galaxy.Instance.GetRandomPlanet());
 
+		Ship s = Galaxy.Instance.CreateShip(0, 0, false, null, 10, 1);
+		s.owner = myNation;
     }
 
     // Update is called once per frame

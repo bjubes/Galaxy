@@ -13,14 +13,18 @@ public class Nation
 
     public List<Planet> planets;
     public Action<Planet> onPlanetColonzied;
+	public List<Ship> ships;
 
-    public Nation(string name, string desc, int credits, int population, List<Planet> planets = null)
+	public Nation(string name, string desc, int credits, int population, List<Planet> planets = null, List<Ship> ships = null)
     {
         this.name = name;
         this.desc = desc;
         this.credits = credits;
         this.population = population;
         this.planets = planets ?? new List<Planet>();
+		this.ships = ships ?? new List<Ship> ();
+
+		Galaxy.Instance.nations.Add (this);
     }
 
     public void ColonizePlanet(Planet p)
